@@ -1,5 +1,6 @@
 import { loadFont } from "@remotion/fonts";
 import React from "react";
+import { Audio } from "@remotion/media";
 import {
   AbsoluteFill,
   interpolate,
@@ -325,7 +326,7 @@ const Hook: React.FC = () => {
         </div>
       </div>
       <Captions
-        duration={HOOK}
+        duration={124}
         chunks={[["Vender", "tu", "casa"], ["sin", "agente"], ["es", "un", "error"], ["Te", "explico", "por", "qué"]]}
       />
     </AbsoluteFill>
@@ -352,7 +353,7 @@ const Error1: React.FC = () => {
         </div>
       </Card>
       <Stamp text="0 OFERTAS" delay={100} color={C.red} top={1170} />
-      <Captions duration={STEP} chunks={[["Pones", "el", "precio"], ["a", "ojo"], ["y", "pasan", "meses"], ["sin", "una", "oferta"]]} />
+      <Captions duration={118} chunks={[["Pones", "el", "precio"], ["a", "ojo"], ["y", "pasan", "meses"], ["sin", "una", "oferta"]]} />
     </AbsoluteFill>
   );
 };
@@ -388,7 +389,7 @@ const Error2: React.FC = () => {
       </Card>
       <AbsoluteFill style={{ background: "white", opacity: flash * 0.8 }} />
       <Stamp text="NADIE LLAMA" delay={95} top={1180} />
-      <Captions duration={STEP} chunks={[["Fotos", "oscuras"], ["con", "la", "ropa"], ["sucia", "de", "fondo"], ["y", "nadie", "llama"]]} />
+      <Captions duration={130} chunks={[["Fotos", "oscuras"], ["con", "la", "ropa"], ["sucia", "de", "fondo"], ["y", "nadie", "llama"]]} />
     </AbsoluteFill>
   );
 };
@@ -428,7 +429,7 @@ const Error3: React.FC = () => {
         <Bubble text="Ok, va 😭" mine delay={85} />
       </Card>
       <Stamp text="-$70,000" delay={105} color={C.red} top={1200} rotate={6} />
-      <Captions duration={STEP} chunks={[["Negocias", "tú", "solo"], ["sin", "experiencia"], ["y", "regalas"], ["miles", "de", "dólares"]]} />
+      <Captions duration={132} chunks={[["Negocias", "tú", "solo"], ["sin", "experiencia"], ["y", "regalas"], ["miles", "de", "dólares"]]} />
     </AbsoluteFill>
   );
 };
@@ -459,7 +460,7 @@ const Error4: React.FC = () => {
         <CheckRow text="avalúo e inspección" delay={56} />
       </Card>
       <Stamp text="DEMANDA ⚖" delay={95} color={C.red} top={1200} />
-      <Captions duration={STEP} chunks={[["Contratos", "escrituras"], ["impuestos…"], ["un", "solo", "error"], ["y", "terminas", "demandado"]]} />
+      <Captions duration={143} chunks={[["Contratos", "escrituras"], ["impuestos…"], ["un", "solo", "error"], ["y", "terminas", "demandado"]]} />
     </AbsoluteFill>
   );
 };
@@ -504,7 +505,7 @@ const Cta: React.FC = () => {
           </div>
         </div>
       </div>
-      <Captions duration={CTA} chunks={[["No", "arriesgues"], ["tu", "patrimonio"], ["contrata", "un", "agente"], ["y", "vende", "mejor"]]} />
+      <Captions duration={136} chunks={[["No", "arriesgues"], ["tu", "patrimonio"], ["contrata", "un", "agente"], ["y", "vende", "mejor"]]} />
     </AbsoluteFill>
   );
 };
@@ -527,16 +528,29 @@ const SCENES: { C: React.FC; d: number }[] = [
   { C: Cta, d: CTA },
 ];
 
+// Frame (within each scene) where its stamp lands, for the thud SFX
+const STAMP_AT: (number | undefined)[] = [undefined, 100, 95, 105, 95, 70];
+
 export const SinAgente: React.FC = () => {
   let from = 0;
   return (
     <AbsoluteFill>
       <Background />
+      <Audio src={staticFile("audio/music.wav")} volume={0.18} />
       {SCENES.map(({ C: Scene, d }, i) => {
         const start = from;
         from += d;
         return (
           <Sequence key={i} from={start} durationInFrames={d}>
+            <Sequence from={4}>
+              <Audio src={staticFile(`audio/vo${i}.wav`)} />
+            </Sequence>
+            {i > 0 ? <Audio src={staticFile("audio/whoosh.wav")} volume={0.35} /> : null}
+            {STAMP_AT[i] !== undefined ? (
+              <Sequence from={STAMP_AT[i]}>
+                <Audio src={staticFile("audio/stamp.wav")} volume={0.6} />
+              </Sequence>
+            ) : null}
             <Shot duration={d}>
               <Scene />
             </Shot>
