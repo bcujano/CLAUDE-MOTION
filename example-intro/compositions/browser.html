@@ -1,0 +1,30 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; background: #eeeeee; display: flex; align-items: center; justify-content: center; }
+    #browser-win { width: 1200px; height: 640px; background: #fff; border-radius: 24px; box-shadow: 0 40px 100px rgba(0,0,0,.18); overflow: hidden; }
+    #browser-bar { height: 80px; background: #f4f4f5; display: flex; align-items: center; gap: 14px; padding: 0 28px; border-bottom: 1px solid #e4e4e7; }
+    .dot { width: 16px; height: 16px; border-radius: 50%; background: #d4d4d8; }
+    #browser-url { margin-left: 24px; flex: 1; height: 44px; background: #fff; border: 1px solid #e4e4e7; border-radius: 22px; display: flex; align-items: center; padding: 0 22px; font: 500 28px "JetBrains Mono"; color: #1a1a1a; }
+    #browser-caret { width: 3px; height: 28px; background: var(--accent, #3b82f6); margin-left: 2px; }
+    #browser-body { display: flex; align-items: center; justify-content: center; height: 560px; font: 600 40px "Inter"; color: #71717a; }
+  </style>
+  <div data-hf-id="hf-psop" id="root" data-composition-id="browser" data-width="1920" data-height="1080">
+    <div data-hf-id="hf-6xkh" id="browser-win" class="clip" data-start="0" data-duration="3.5">
+      <div data-hf-id="hf-egv3" id="browser-bar"><span data-hf-id="hf-9gry" class="dot"></span><span data-hf-id="hf-zcc2" class="dot"></span><span data-hf-id="hf-zqn3" class="dot"></span>
+        <div data-hf-id="hf-f3h7" id="browser-url"><span data-hf-id="hf-0fue" id="browser-typed">https://</span><span data-hf-id="hf-mxbo" id="browser-caret"></span></div>
+      </div>
+      <div data-hf-id="hf-dnek" id="browser-body"><span data-hf-id="hf-g502" id="browser-hint">Loading…</span></div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#browser-win", { y: 40, opacity: 1, scale: 0.96 }, { y: 0, opacity: 1, scale: 1, duration: 0.7, ease: "power3.out" }, 0);
+    const full = "https://example.com";
+    const typed = { n: 8 };
+    tl.fromTo(typed, { n: 8 }, { n: full.length, duration: 1.2, ease: "none", onUpdate: () => { document.querySelector("#browser-typed").textContent = full.slice(0, Math.round(typed.n)); } }, 0.8);
+    tl.fromTo("#browser-caret", { opacity: 1 }, { opacity: 0, duration: 0.25, ease: "steps(1)", yoyo: true, repeat: 9 }, 0.8);
+    tl.fromTo("#browser-hint", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 2.2);
+    tl.fromTo("#browser-win", { scale: 1 }, { scale: 1.6, opacity: 0, duration: 0.6, ease: "power3.in", immediateRender: false }, 2.85);
+    window.__timelines["browser"] = tl;
+  </script>
+</template>

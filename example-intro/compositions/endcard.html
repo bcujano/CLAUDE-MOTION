@@ -1,0 +1,18 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; background: #1a1a1a; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; }
+    #endcard-url { font: 700 140px "JetBrains Mono"; color: #ffffff; letter-spacing: -0.03em; }
+    #endcard-accent { color: var(--accent, #3b82f6); }
+    #endcard-tag { font: 500 40px "Inter"; color: #a1a1aa; }
+  </style>
+  <div data-hf-id="hf-32ii" id="root" data-composition-id="endcard" data-width="1920" data-height="1080">
+    <div data-hf-id="hf-w692" id="endcard-url" class="clip" data-start="0" data-duration="3"><span data-hf-id="hf-lkkp" id="endcard-name">example</span><span data-hf-id="hf-7r8l" id="endcard-accent">.com</span></div>
+    <div data-hf-id="hf-8dpc" id="endcard-tag" class="clip" data-start="0" data-duration="3">Free for docs. No permission needed.</div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#endcard-url", { scale: 0.85, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.6)" }, 0.1);
+    tl.fromTo("#endcard-tag", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, 0.35);
+    window.__timelines["endcard"] = tl;
+  </script>
+</template>

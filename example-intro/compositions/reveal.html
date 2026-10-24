@@ -1,0 +1,21 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; background: #eeeeee; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+    #reveal-title { font: 800 150px "Inter"; letter-spacing: -0.04em; color: #1a1a1a; }
+    #reveal-rule { width: 0; height: 8px; background: var(--accent, #3b82f6); border-radius: 4px; margin: 36px 0; }
+    #reveal-body { font: 400 44px/1.4 "Inter"; color: #52525b; max-width: 1200px; }
+  </style>
+  <div data-hf-id="hf-yqoq" id="root" data-composition-id="reveal" data-width="1920" data-height="1080">
+    <h1 data-hf-id="hf-8uev" id="reveal-title" class="clip" data-start="0" data-duration="3.5" data-var-text="headline">Example Domain</h1>
+    <div data-hf-id="hf-h066" id="reveal-rule" class="clip" data-start="0" data-duration="3.5"></div>
+    <p data-hf-id="hf-5wvw" id="reveal-body" class="clip" data-start="0" data-duration="3.5">This domain is for use in documentation examples — no permission needed.</p>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#reveal-title", { y: 60, opacity: 0, filter: "blur(10px)" }, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.6, ease: "power4.out" }, 0.05);
+    tl.fromTo("#reveal-rule", { width: 0 }, { width: 220, duration: 0.5, ease: "power3.out" }, 0.4);
+    tl.fromTo("#reveal-body", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, 0.4);
+    tl.fromTo(["#reveal-title", "#reveal-rule", "#reveal-body"], { opacity: 1 }, { opacity: 0, y: -40, duration: 0.4, ease: "power2.in", stagger: 0.05, immediateRender: false }, 3.05);
+    window.__timelines["reveal"] = tl;
+  </script>
+</template>
